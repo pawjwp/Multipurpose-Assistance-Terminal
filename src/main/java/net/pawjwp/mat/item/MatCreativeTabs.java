@@ -18,7 +18,7 @@ public class MatCreativeTabs {
             .title(Component.translatable("creativetab.mat_tab"))
             .displayItems((pParameters, pOutput) -> {
                 pOutput.accept(MatItems.MAT.get());
-                // other items pOutput.accept(MATItems.MAT.get());
+                pOutput.accept(MatItems.LOCATION_DATA_CHIP.get());
             })
             .build());
 

@@ -27,6 +27,9 @@ public class MatItems {
     // Item registry
     public static final RegistryObject<Item> MAT = ITEMS.register("mat",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LOCATION_DATA_CHIP = ITEMS.register("location_data_chip",
+            () -> new Item(new Item.Properties()));
+
 
     // Block item registry
     public static final RegistryObject<Item> DARK_PLASTEEL_BLOCK = registerWithTab("dark_plasteel_block",
