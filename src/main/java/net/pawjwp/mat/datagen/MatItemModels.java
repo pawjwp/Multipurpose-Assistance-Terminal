@@ -4,7 +4,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.pawjwp.mat.MultipurposeAssistanceTerminal;
@@ -32,6 +34,10 @@ public class MatItemModels extends ItemModelProvider {
         // If needed in the future, exclude specific items here
         // items.remove(MatItems.EXAMPLE_ITEM.get());
 
+        // MAT
+        terminalModel(MatItems.MAT.get(), "mat");
+        items.remove(MatItems.MAT.get());
+
         // Blocks whose items look alike
         takeAll(items, i -> i instanceof BlockItem).forEach(item -> blockBasedModel(item, ""));
 
@@ -45,6 +51,32 @@ public class MatItemModels extends ItemModelProvider {
 
     public void blockBasedModel(Item item, String suffix) {
         withExistingParent(itemName(item), resourceBlock(itemName(item) + suffix));
+    }
+
+    public void terminalModel(Item terminalItem, String baseTextureName) {
+        final String baseItemName = itemName(terminalItem);
+
+        ItemModelBuilder main = withExistingParent(baseItemName, GENERATED)
+                .texture("layer0", resourceItem(baseItemName));
+
+        for (int i = 0; i <= 32; i++) {
+            int frame = (i + 16) & 31;
+            String modelName = baseTextureName + "_tracked_" + String.format("%02d", frame);
+
+            float angle = 0.0f;
+            if (i != 0) {
+                angle = (2f * i - 1f) / 64f;
+
+                withExistingParent(modelName, ResourceLocation.parse(GENERATED))
+                        .texture("layer0", resourceItem(modelName));
+            }
+
+            main.override()
+                    .predicate(ResourceLocation.parse("angle"), angle)
+                    .model(new ModelFile.UncheckedModelFile(
+                            resourceItem(modelName)
+                    ));
+        }
     }
 
     public void itemGeneratedModel(Item item, ResourceLocation texture) {
