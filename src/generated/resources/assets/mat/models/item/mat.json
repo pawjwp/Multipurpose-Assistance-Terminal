@@ -1,5 +1,205 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "mat:item/mat_tracked_16",
+      "predicate": {
+        "minecraft:angle": 0.0
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_17",
+      "predicate": {
+        "minecraft:angle": 0.015625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_18",
+      "predicate": {
+        "minecraft:angle": 0.046875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_19",
+      "predicate": {
+        "minecraft:angle": 0.078125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_20",
+      "predicate": {
+        "minecraft:angle": 0.109375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_21",
+      "predicate": {
+        "minecraft:angle": 0.140625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_22",
+      "predicate": {
+        "minecraft:angle": 0.171875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_23",
+      "predicate": {
+        "minecraft:angle": 0.203125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_24",
+      "predicate": {
+        "minecraft:angle": 0.234375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_25",
+      "predicate": {
+        "minecraft:angle": 0.265625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_26",
+      "predicate": {
+        "minecraft:angle": 0.296875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_27",
+      "predicate": {
+        "minecraft:angle": 0.328125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_28",
+      "predicate": {
+        "minecraft:angle": 0.359375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_29",
+      "predicate": {
+        "minecraft:angle": 0.390625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_30",
+      "predicate": {
+        "minecraft:angle": 0.421875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_31",
+      "predicate": {
+        "minecraft:angle": 0.453125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_00",
+      "predicate": {
+        "minecraft:angle": 0.484375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_01",
+      "predicate": {
+        "minecraft:angle": 0.515625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_02",
+      "predicate": {
+        "minecraft:angle": 0.546875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_03",
+      "predicate": {
+        "minecraft:angle": 0.578125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_04",
+      "predicate": {
+        "minecraft:angle": 0.609375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_05",
+      "predicate": {
+        "minecraft:angle": 0.640625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_06",
+      "predicate": {
+        "minecraft:angle": 0.671875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_07",
+      "predicate": {
+        "minecraft:angle": 0.703125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_08",
+      "predicate": {
+        "minecraft:angle": 0.734375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_09",
+      "predicate": {
+        "minecraft:angle": 0.765625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_10",
+      "predicate": {
+        "minecraft:angle": 0.796875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_11",
+      "predicate": {
+        "minecraft:angle": 0.828125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_12",
+      "predicate": {
+        "minecraft:angle": 0.859375
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_13",
+      "predicate": {
+        "minecraft:angle": 0.890625
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_14",
+      "predicate": {
+        "minecraft:angle": 0.921875
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_15",
+      "predicate": {
+        "minecraft:angle": 0.953125
+      }
+    },
+    {
+      "model": "mat:item/mat_tracked_16",
+      "predicate": {
+        "minecraft:angle": 0.984375
+      }
+    }
+  ],
   "textures": {
     "layer0": "mat:item/mat"
   }
