@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mat:block/light_plasteel_block"
+    }
+  }
+}

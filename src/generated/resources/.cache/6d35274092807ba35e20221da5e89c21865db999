@@ -1,0 +1,5 @@
+// 1.20.1	2025-11-02T21:55:39.1177194	Tags for minecraft:block mod id mat
+e387902dfefefaf1d6f5698a9e9f325ebabc3d18 data/forge/tags/blocks/storage_blocks/dark_plasteel.json
+4dc8ff02f0b48ae1b669576b2965ad5b1d7808a0 data/forge/tags/blocks/storage_blocks/light_plasteel.json
+d41bebf6977e870ccf7a829ce9b4f3f583e73874 data/forge/tags/blocks/storage_blocks/plasteel.json
+d41bebf6977e870ccf7a829ce9b4f3f583e73874 data/minecraft/tags/blocks/mineable/pickaxe.json
