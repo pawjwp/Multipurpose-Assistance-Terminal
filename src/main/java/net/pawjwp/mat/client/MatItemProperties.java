@@ -23,6 +23,12 @@ public class MatItemProperties {
         event.enqueueWork(() -> {
             ItemProperties.register(
                     MatItems.MAT.get(),
+                    ResourceLocation.parse("mode"),
+                    (stack, level, entity, seed) -> TerminalItem.getMode(stack)
+            );
+
+            ItemProperties.register(
+                    MatItems.MAT.get(),
                     ResourceLocation.parse("angle"),
                     new CompassItemPropertyFunction((level, stack, entity) -> {
                         return TerminalItem.hasTarget(stack) ? TerminalItem.getTargetPosition(stack.getOrCreateTag()): null;

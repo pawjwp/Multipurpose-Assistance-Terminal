@@ -5,6 +5,8 @@
   "block.mat.light_plasteel_block": "Light Plasteel Block",
 
   "item.mat.mat": "Multipurpose Assistance Terminal",
-  "item.mat.mat_tracked": "Multipurpose Assistance Terminal (Tracking)",
+  "item.mat.mat_tracking": "Multipurpose Assistance Terminal (Tracking)",
+  "item.mat.mat_questing": "Multipurpose Assistance Terminal (Questing)",
+  "item.mat.mat_atlas": "Multipurpose Assistance Terminal (Atlas)",
   "item.mat.location_data_chip": "Data Chip (Location)"
 }

@@ -11,6 +11,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.pawjwp.mat.MultipurposeAssistanceTerminal;
 import net.pawjwp.mat.item.MatItems;
+import net.pawjwp.mat.item.TerminalItem;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -55,13 +56,22 @@ public class MatItemModels extends ItemModelProvider {
 
     public void terminalModel(Item terminalItem, String baseTextureName) {
         final String baseItemName = itemName(terminalItem);
+        final String trackingItemName = baseTextureName + "_tracking";
+        final String questingItemName = baseTextureName + "_questing";
+        final String atlasItemName = baseTextureName + "_atlas";
 
-        ItemModelBuilder main = withExistingParent(baseItemName, GENERATED)
+        ItemModelBuilder baseModel = withExistingParent(baseItemName, GENERATED)
                 .texture("layer0", resourceItem(baseItemName));
+        ItemModelBuilder trackingModel = withExistingParent(trackingItemName, GENERATED)
+                .texture("layer0", resourceItem(trackingItemName));
+        ItemModelBuilder questingModel = withExistingParent(questingItemName, GENERATED)
+                .texture("layer0", resourceItem(questingItemName));
+        ItemModelBuilder atlasModel = withExistingParent(atlasItemName, GENERATED)
+                .texture("layer0", resourceItem(atlasItemName));
 
         for (int i = 0; i <= 32; i++) {
             int frame = (i + 16) & 31;
-            String modelName = baseTextureName + "_tracked_" + String.format("%02d", frame);
+            String modelName = baseTextureName + "_tracking_" + String.format("%02d", frame);
 
             float angle = 0.0f;
             if (i != 0) {
@@ -71,12 +81,18 @@ public class MatItemModels extends ItemModelProvider {
                         .texture("layer0", resourceItem(modelName));
             }
 
-            main.override()
+            baseModel.override()
+                    .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_TRACKING)
                     .predicate(ResourceLocation.parse("angle"), angle)
-                    .model(new ModelFile.UncheckedModelFile(
-                            resourceItem(modelName)
-                    ));
+                    .model(new ModelFile.UncheckedModelFile(resourceItem(modelName)));
         }
+
+        baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_QUESTING)
+                .model(new ModelFile.ExistingModelFile(resourceItem(questingItemName), existingFileHelper));
+        baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_ATLAS)
+                .model(new ModelFile.ExistingModelFile(resourceItem(atlasItemName), existingFileHelper));
     }
 
     public void itemGeneratedModel(Item item, ResourceLocation texture) {

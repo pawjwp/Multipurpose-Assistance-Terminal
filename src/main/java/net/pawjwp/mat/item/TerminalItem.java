@@ -7,16 +7,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -31,9 +28,23 @@ public class TerminalItem extends Item implements Vanishable {
     public static final String TAG_TARGET_POS = "TargetPos";
     public static final String TAG_TARGET_DIMENSION = "TargetDimension";
     public static final String TAG_TARGET_TRACKED = "TargetTracked";
+    public static final String TAG_MODE = "Mode";
+    public static final float
+            MODE_DEFAULT = 0f,
+            MODE_TRACKING = 1f,
+            MODE_QUESTING = 2f,
+            MODE_ATLAS = 3f;
 
     public TerminalItem(Item.Properties pProperties) {
         super(pProperties);
+    }
+
+    public static float getMode(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return (tag != null && tag.contains(TAG_MODE)) ? tag.getFloat(TAG_MODE) : MODE_DEFAULT;
+    }
+    public static void setMode(ItemStack stack, float mode) {
+        stack.getOrCreateTag().putFloat(TAG_MODE, mode);
     }
 
     public static boolean hasTarget(ItemStack pStack) {
@@ -99,6 +110,7 @@ public class TerminalItem extends Item implements Vanishable {
             boolean flag = !player.getAbilities().instabuild && itemstack.getCount() == 1;
             if (flag) {
                 this.setTarget(level.dimension(), blockpos, itemstack.getOrCreateTag());
+                this.setMode(itemstack, MODE_TRACKING);
             } else {
                 ItemStack itemstack1 = new ItemStack(MatItems.MAT.get(), 1);
                 CompoundTag compoundtag = itemstack.hasTag() ? itemstack.getTag().copy() : new CompoundTag();
@@ -108,6 +120,7 @@ public class TerminalItem extends Item implements Vanishable {
                 }
 
                 this.setTarget(level.dimension(), blockpos, compoundtag);
+                this.setMode(itemstack1, MODE_TRACKING);
                 if (!player.getInventory().add(itemstack1)) {
                     player.drop(itemstack1, false);
                 }
@@ -130,6 +143,12 @@ public class TerminalItem extends Item implements Vanishable {
      * different names based on their damage or NBT.
      */
     public String getDescriptionId(ItemStack pStack) {
-        return hasTarget(pStack) ? "item.mat.mat_tracked" : super.getDescriptionId(pStack);
+        float mode = getMode(pStack);
+        return switch ((int) (mode)) {
+            case 1 -> "item.mat.mat_tracking";
+            case 2 -> "item.mat.mat_questing";
+            case 3 -> "item.mat.mat_atlas";
+            default -> "item.mat.mat";
+        };
     }
 }
