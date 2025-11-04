@@ -2,18 +2,6 @@
   "parent": "minecraft:item/generated",
   "overrides": [
     {
-      "model": "mat:item/mat_questing",
-      "predicate": {
-        "minecraft:mode": 2.0
-      }
-    },
-    {
-      "model": "mat:item/mat_atlas",
-      "predicate": {
-        "minecraft:mode": 3.0
-      }
-    },
-    {
       "model": "mat:item/mat_tracking_16",
       "predicate": {
         "minecraft:angle": 0.0,
@@ -242,6 +230,18 @@
       "predicate": {
         "minecraft:angle": 0.984375,
         "minecraft:mode": 1.0
+      }
+    },
+    {
+      "model": "mat:item/mat_questing",
+      "predicate": {
+        "minecraft:mode": 2.0
+      }
+    },
+    {
+      "model": "mat:item/mat_atlas",
+      "predicate": {
+        "minecraft:mode": 3.0
       }
     }
   ],
