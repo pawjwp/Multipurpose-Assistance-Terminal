@@ -9,7 +9,9 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -39,14 +41,26 @@ public class TerminalItem extends Item implements Vanishable {
         super(pProperties);
     }
 
+    // Mode handling
     public static float getMode(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         return (tag != null && tag.contains(TAG_MODE)) ? tag.getFloat(TAG_MODE) : MODE_DEFAULT;
     }
+
     public static void setMode(ItemStack stack, float mode) {
         stack.getOrCreateTag().putFloat(TAG_MODE, mode);
     }
 
+    public void iterateMode(ItemStack stack) {
+        float mode = getMode(stack);
+        mode += 1f;
+        if (mode > MODE_ATLAS) {
+            mode = MODE_DEFAULT;
+        };
+        setMode(stack, mode);
+    }
+
+    // Target handling
     public static boolean hasTarget(ItemStack pStack) {
         CompoundTag compoundtag = pStack.getTag();
         return compoundtag != null && (compoundtag.contains(TAG_TARGET_DIMENSION) || compoundtag.contains(TAG_TARGET_POS));
@@ -130,6 +144,19 @@ public class TerminalItem extends Item implements Vanishable {
         }
     }
 
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (player.isSecondaryUseActive()) {
+            if (!level.isClientSide) {
+                iterateMode(stack);
+                level.playSound(null, player.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.PLAYERS, 0.4F, 0.5F + 0.1F * getMode(stack));
+            }
+            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+        }
+        return super.use(level, player, hand);
+    }
+
     private void setTarget(ResourceKey<Level> pLodestoneDimension, BlockPos pLodestonePos, CompoundTag pCompoundTag) {
         pCompoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(pLodestonePos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, pLodestoneDimension).resultOrPartial(LOGGER::error).ifPresent((p_40731_) -> {
@@ -137,6 +164,7 @@ public class TerminalItem extends Item implements Vanishable {
         });
         pCompoundTag.putBoolean(TAG_TARGET_TRACKED, true);
     }
+
 
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
