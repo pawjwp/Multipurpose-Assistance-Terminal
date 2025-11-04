@@ -1,10 +1,11 @@
-// 1.20.1	2025-11-04T12:26:27.6318274	Item Models: mat
+// 1.20.1	2025-11-04T14:54:52.4393454	Item Models: mat
 f4fd1e0890c0a50dc875c73cce3a8ed5ae7d936c assets/mat/models/item/dark_plasteel_block.json
 b5e8ba8f0ae78db63671ed03bd12b42abe64553b assets/mat/models/item/light_plasteel_block.json
 f35c311a3f4f09d2509d63753427a242eb4ae810 assets/mat/models/item/location_data_chip.json
-0722f5ba30dec7feecb758e25d6ede1a01cf1c99 assets/mat/models/item/mat.json
+b0f8776b745e3a2cc350c198d70ba46cf504a7a7 assets/mat/models/item/mat.json
 8336a80094fa4f28f95058fd908b582b90ca9be8 assets/mat/models/item/mat_atlas.json
 5f239e1ca778fc3fb686d507aacfe9f4f67f1904 assets/mat/models/item/mat_questing.json
+9a35633eb9ed615d9d8c952f5ca81586938c1c92 assets/mat/models/item/mat_starmap.json
 42e8a64d261928eb2af22bc82e48ca56113dd1e8 assets/mat/models/item/mat_tracking.json
 7ac6b061f5142b1baf220e9d6826897417b96b73 assets/mat/models/item/mat_tracking_00.json
 2efb13109a23f5fa04e8e3bb8f33c5a1a606f7e3 assets/mat/models/item/mat_tracking_01.json

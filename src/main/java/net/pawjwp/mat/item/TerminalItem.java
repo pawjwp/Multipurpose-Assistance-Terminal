@@ -32,10 +32,11 @@ public class TerminalItem extends Item implements Vanishable {
     public static final String TAG_TARGET_TRACKED = "TargetTracked";
     public static final String TAG_MODE = "Mode";
     public static final float
-            MODE_DEFAULT = 0f,
-            MODE_TRACKING = 1f,
-            MODE_QUESTING = 2f,
-            MODE_ATLAS = 3f;
+            MODE_DEFAULT = 0f,  // blue
+            MODE_TRACKING = 1f, // green
+            MODE_ATLAS = 2f,    // yellow
+            MODE_STARMAP = 3f,  // red
+            MODE_QUESTING = 4f; // purple
 
     public TerminalItem(Item.Properties pProperties) {
         super(pProperties);
@@ -54,7 +55,7 @@ public class TerminalItem extends Item implements Vanishable {
     public void iterateMode(ItemStack stack) {
         float mode = getMode(stack);
         mode += 1f;
-        if (mode > MODE_ATLAS) {
+        if (mode > MODE_QUESTING) {
             mode = MODE_DEFAULT;
         };
         setMode(stack, mode);
@@ -174,8 +175,9 @@ public class TerminalItem extends Item implements Vanishable {
         float mode = getMode(pStack);
         return switch ((int) (mode)) {
             case 1 -> "item.mat.mat_tracking";
-            case 2 -> "item.mat.mat_questing";
-            case 3 -> "item.mat.mat_atlas";
+            case 2 -> "item.mat.mat_atlas";
+            case 3 -> "item.mat.mat_starmap";
+            case 4 -> "item.mat.mat_questing";
             default -> "item.mat.mat";
         };
     }

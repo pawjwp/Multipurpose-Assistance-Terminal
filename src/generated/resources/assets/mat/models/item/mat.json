@@ -233,15 +233,21 @@
       }
     },
     {
-      "model": "mat:item/mat_questing",
+      "model": "mat:item/mat_atlas",
       "predicate": {
         "minecraft:mode": 2.0
       }
     },
     {
-      "model": "mat:item/mat_atlas",
+      "model": "mat:item/mat_starmap",
       "predicate": {
         "minecraft:mode": 3.0
+      }
+    },
+    {
+      "model": "mat:item/mat_questing",
+      "predicate": {
+        "minecraft:mode": 4.0
       }
     }
   ],

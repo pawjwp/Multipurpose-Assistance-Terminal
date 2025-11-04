@@ -6,7 +6,8 @@
 
   "item.mat.mat": "Multipurpose Assistance Terminal",
   "item.mat.mat_tracking": "Multipurpose Assistance Terminal (Tracking)",
-  "item.mat.mat_questing": "Multipurpose Assistance Terminal (Questing)",
   "item.mat.mat_atlas": "Multipurpose Assistance Terminal (Atlas)",
+  "item.mat.mat_questing": "Multipurpose Assistance Terminal (Questing)",
+  "item.mat.mat_starmap": "Multipurpose Assistance Terminal (Starmap)",
   "item.mat.location_data_chip": "Data Chip (Location)"
 }
