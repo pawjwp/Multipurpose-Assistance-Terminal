@@ -56,22 +56,35 @@ public class MatItemModels extends ItemModelProvider {
 
     public void terminalModel(Item terminalItem, String baseTextureName) {
         final String baseItemName = itemName(terminalItem);
+        final String guideItemName = baseTextureName + "_guide";
         final String trackingItemName = baseTextureName + "_tracking";
         final String atlasItemName = baseTextureName + "_atlas";
-        final String starmapItemName = baseTextureName + "_starmap";
+        final String craftingItemName = baseTextureName + "_crafting";
         final String questingItemName = baseTextureName + "_questing";
+        final String storageItemName = baseTextureName + "_storage";
+        final String starmapItemName = baseTextureName + "_starmap";
 
         ItemModelBuilder baseModel = withExistingParent(baseItemName, GENERATED)
                 .texture("layer0", resourceItem(baseItemName));
+        ItemModelBuilder guideModel = withExistingParent(guideItemName, GENERATED)
+                .texture("layer0", resourceItem(guideItemName));
         ItemModelBuilder trackingModel = withExistingParent(trackingItemName, GENERATED)
                 .texture("layer0", resourceItem(trackingItemName));
         ItemModelBuilder atlasModel = withExistingParent(atlasItemName, GENERATED)
                 .texture("layer0", resourceItem(atlasItemName));
-        ItemModelBuilder starmapModel = withExistingParent(starmapItemName, GENERATED)
-                .texture("layer0", resourceItem(starmapItemName));
+        ItemModelBuilder craftingModel = withExistingParent(craftingItemName, GENERATED)
+                .texture("layer0", resourceItem(craftingItemName));
         ItemModelBuilder questingModel = withExistingParent(questingItemName, GENERATED)
                 .texture("layer0", resourceItem(questingItemName));
+        ItemModelBuilder storageModel = withExistingParent(storageItemName, GENERATED)
+                .texture("layer0", resourceItem(storageItemName));
+        ItemModelBuilder starmapModel = withExistingParent(starmapItemName, GENERATED)
+                .texture("layer0", resourceItem(starmapItemName));
 
+
+        baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_GUIDE)
+                .model(new ModelFile.ExistingModelFile(resourceItem(guideItemName), existingFileHelper));
         for (int i = 0; i <= 32; i++) {
             int frame = (i + 16) & 31;
             String modelName = baseTextureName + "_tracking_" + String.format("%02d", frame);
@@ -90,14 +103,20 @@ public class MatItemModels extends ItemModelProvider {
                     .model(new ModelFile.UncheckedModelFile(resourceItem(modelName)));
         }
         baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_CRAFTING)
+                .model(new ModelFile.ExistingModelFile(resourceItem(craftingItemName), existingFileHelper));
+        baseModel.override()
                 .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_ATLAS)
                 .model(new ModelFile.ExistingModelFile(resourceItem(atlasItemName), existingFileHelper));
         baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_STARMAP)
-                .model(new ModelFile.ExistingModelFile(resourceItem(starmapItemName), existingFileHelper));
-        baseModel.override()
                 .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_QUESTING)
                 .model(new ModelFile.ExistingModelFile(resourceItem(questingItemName), existingFileHelper));
+        baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_STORAGE)
+                .model(new ModelFile.ExistingModelFile(resourceItem(storageItemName), existingFileHelper));
+        baseModel.override()
+                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_STARMAP)
+                .model(new ModelFile.ExistingModelFile(resourceItem(starmapItemName), existingFileHelper));
     }
 
     public void itemGeneratedModel(Item item, ResourceLocation texture) {

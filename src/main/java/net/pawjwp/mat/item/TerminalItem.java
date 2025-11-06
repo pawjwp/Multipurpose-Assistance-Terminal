@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -31,12 +32,15 @@ public class TerminalItem extends Item implements Vanishable {
     public static final String TAG_TARGET_DIMENSION = "TargetDimension";
     public static final String TAG_TARGET_TRACKED = "TargetTracked";
     public static final String TAG_MODE = "Mode";
-    public static final float
-            MODE_DEFAULT = 0f,  // blue
-            MODE_TRACKING = 1f, // green
-            MODE_ATLAS = 2f,    // yellow
-            MODE_STARMAP = 3f,  // red
-            MODE_QUESTING = 4f; // purple
+
+    public static final float   MODE_DEFAULT   =  0f,  // blue    ( 185  175 - 195 )  right-left
+                                MODE_GUIDE     =  1f,  // forest  ( 140  150 - 130 )   left-right
+                                MODE_TRACKING  =  2f,  // lime    ( 95   85  - 105 )  right-left
+                                MODE_ATLAS     =  3f,  // yellow  ( 50   60  - 40  )   left-right
+                                MODE_CRAFTING  =  4f,  // red     ( 5    15  - 355 )   left-right
+                                MODE_QUESTING  =  5f,  // pink    ( 320  310 - 330 )  right-left
+                                MODE_STORAGE   =  6f,  // purple  ( 275  285 - 265 )   left-right
+                                MODE_STARMAP   =  7f;  // indigo  ( 230  220 - 240 )  right-left
 
     public TerminalItem(Item.Properties pProperties) {
         super(pProperties);
@@ -55,7 +59,7 @@ public class TerminalItem extends Item implements Vanishable {
     public void iterateMode(ItemStack stack) {
         float mode = getMode(stack);
         mode += 1f;
-        if (mode > MODE_QUESTING) {
+        if (mode > MODE_STARMAP) {
             mode = MODE_DEFAULT;
         };
         setMode(stack, mode);
@@ -148,14 +152,23 @@ public class TerminalItem extends Item implements Vanishable {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (player.isSecondaryUseActive()) {
-            if (!level.isClientSide) {
+
+        if (!level.isClientSide) {
+            // When shift+right-clicking, cycle mode
+            if (player.isSecondaryUseActive()) {
                 iterateMode(stack);
                 level.playSound(null, player.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.PLAYERS, 0.4F, 0.5F + 0.1F * getMode(stack));
             }
-            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+            // Otherwise, open corresponding menu
+            else {
+                player.openMenu(new SimpleMenuProvider(
+                        (id, inventory, p) -> new net.minecraft.world.inventory.CraftingMenu(id, inventory),
+                        net.minecraft.network.chat.Component.translatable("container.mat.crafting")
+                ));
+            }
         }
-        return super.use(level, player, hand);
+
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
 
     private void setTarget(ResourceKey<Level> pLodestoneDimension, BlockPos pLodestonePos, CompoundTag pCompoundTag) {
@@ -174,10 +187,13 @@ public class TerminalItem extends Item implements Vanishable {
     public String getDescriptionId(ItemStack pStack) {
         float mode = getMode(pStack);
         return switch ((int) (mode)) {
-            case 1 -> "item.mat.mat_tracking";
-            case 2 -> "item.mat.mat_atlas";
-            case 3 -> "item.mat.mat_starmap";
-            case 4 -> "item.mat.mat_questing";
+            case 1 -> "item.mat.mat_guide";
+            case 2 -> "item.mat.mat_tracking";
+            case 3 -> "item.mat.mat_atlas";
+            case 4 -> "item.mat.mat_crafting";
+            case 5 -> "item.mat.mat_questing";
+            case 6 -> "item.mat.mat_storage";
+            case 7 -> "item.mat.mat_starmap";
             default -> "item.mat.mat";
         };
     }
