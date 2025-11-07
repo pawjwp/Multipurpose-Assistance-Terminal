@@ -2,244 +2,250 @@
   "parent": "minecraft:item/generated",
   "overrides": [
     {
+      "model": "mat:item/mat_guide",
+      "predicate": {
+        "minecraft:mode": 1.0
+      }
+    },
+    {
       "model": "mat:item/mat_tracking_16",
       "predicate": {
         "minecraft:angle": 0.0,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_17",
       "predicate": {
         "minecraft:angle": 0.015625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_18",
       "predicate": {
         "minecraft:angle": 0.046875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_19",
       "predicate": {
         "minecraft:angle": 0.078125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_20",
       "predicate": {
         "minecraft:angle": 0.109375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_21",
       "predicate": {
         "minecraft:angle": 0.140625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_22",
       "predicate": {
         "minecraft:angle": 0.171875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_23",
       "predicate": {
         "minecraft:angle": 0.203125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_24",
       "predicate": {
         "minecraft:angle": 0.234375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_25",
       "predicate": {
         "minecraft:angle": 0.265625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_26",
       "predicate": {
         "minecraft:angle": 0.296875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_27",
       "predicate": {
         "minecraft:angle": 0.328125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_28",
       "predicate": {
         "minecraft:angle": 0.359375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_29",
       "predicate": {
         "minecraft:angle": 0.390625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_30",
       "predicate": {
         "minecraft:angle": 0.421875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_31",
       "predicate": {
         "minecraft:angle": 0.453125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_00",
       "predicate": {
         "minecraft:angle": 0.484375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_01",
       "predicate": {
         "minecraft:angle": 0.515625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_02",
       "predicate": {
         "minecraft:angle": 0.546875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_03",
       "predicate": {
         "minecraft:angle": 0.578125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_04",
       "predicate": {
         "minecraft:angle": 0.609375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_05",
       "predicate": {
         "minecraft:angle": 0.640625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_06",
       "predicate": {
         "minecraft:angle": 0.671875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_07",
       "predicate": {
         "minecraft:angle": 0.703125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_08",
       "predicate": {
         "minecraft:angle": 0.734375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_09",
       "predicate": {
         "minecraft:angle": 0.765625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_10",
       "predicate": {
         "minecraft:angle": 0.796875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_11",
       "predicate": {
         "minecraft:angle": 0.828125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_12",
       "predicate": {
         "minecraft:angle": 0.859375,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_13",
       "predicate": {
         "minecraft:angle": 0.890625,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_14",
       "predicate": {
         "minecraft:angle": 0.921875,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_15",
       "predicate": {
         "minecraft:angle": 0.953125,
-        "minecraft:mode": 1.0
+        "minecraft:mode": 2.0
       }
     },
     {
       "model": "mat:item/mat_tracking_16",
       "predicate": {
         "minecraft:angle": 0.984375,
-        "minecraft:mode": 1.0
-      }
-    },
-    {
-      "model": "mat:item/mat_atlas",
-      "predicate": {
         "minecraft:mode": 2.0
       }
     },
     {
-      "model": "mat:item/mat_starmap",
+      "model": "mat:item/mat_crafting",
+      "predicate": {
+        "minecraft:mode": 4.0
+      }
+    },
+    {
+      "model": "mat:item/mat_atlas",
       "predicate": {
         "minecraft:mode": 3.0
       }
@@ -247,7 +253,19 @@
     {
       "model": "mat:item/mat_questing",
       "predicate": {
-        "minecraft:mode": 4.0
+        "minecraft:mode": 5.0
+      }
+    },
+    {
+      "model": "mat:item/mat_storage",
+      "predicate": {
+        "minecraft:mode": 6.0
+      }
+    },
+    {
+      "model": "mat:item/mat_starmap",
+      "predicate": {
+        "minecraft:mode": 7.0
       }
     }
   ],
