@@ -105,7 +105,7 @@ minecraft {
             workingDirectory project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'hqm'
         }
     }
 }
@@ -178,8 +178,10 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    //runtimeOnly fg.deobf("curse.maven:hqm:${hqm_version}")
-    runtimeOnly fg.deobf("maven.modrinth:map-atlases:${mapatlases_version}")
+    runtimeOnly fg.deobf("curse.maven:architectury-api-419699:5137938")
+    implementation fg.deobf("curse.maven:hardcore-questing-mode-77027:4826873")
+
+    runtimeOnly fg.deobf("maven.modrinth:map-atlases:1.20-6.0.17")
 
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     runtimeOnly fg.deobf("maven.modrinth:appleskin:${appleskin_version}")
