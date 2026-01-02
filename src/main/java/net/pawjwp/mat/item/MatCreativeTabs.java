@@ -16,10 +16,6 @@ public class MatCreativeTabs {
     public static final RegistryObject<CreativeModeTab> MAT_TAB = CREATIVE_MODE_TABS.register("mat_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(MatItems.MAT.get()))
             .title(Component.translatable("creativetab.mat_tab"))
-            .displayItems((pParameters, pOutput) -> {
-                pOutput.accept(MatItems.MAT.get());
-                pOutput.accept(MatItems.LOCATION_DATA_CHIP.get());
-            })
             .build());
 
 

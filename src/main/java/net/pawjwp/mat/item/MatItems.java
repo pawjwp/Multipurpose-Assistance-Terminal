@@ -19,15 +19,15 @@ public class MatItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, MultipurposeAssistanceTerminal.MOD_ID);
 
     public static RegistryObject<Item> registerWithTab(String name, Supplier<Item> supplier) {
-        RegistryObject<Item> block = ITEMS.register(name, supplier);
-        CREATIVE_TAB_ITEMS.add(block);
-        return block;
+        RegistryObject<Item> item = ITEMS.register(name, supplier);
+        CREATIVE_TAB_ITEMS.add(item);
+        return item;
     }
 
     // Item registry
-    public static final RegistryObject<Item> MAT = ITEMS.register("mat",
+    public static final RegistryObject<Item> MAT = registerWithTab("mat",
             () -> new TerminalItem(new Item.Properties()));
-    public static final RegistryObject<Item> LOCATION_DATA_CHIP = ITEMS.register("location_data_chip",
+    public static final RegistryObject<Item> LOCATION_DATA_CHIP = registerWithTab("location_data_chip",
             () -> new Item(new Item.Properties()));
 
 
@@ -36,7 +36,6 @@ public class MatItems {
             () -> new BlockItem(MatBlocks.DARK_PLASTEEL_BLOCK.get(), basicItem()));
     public static final RegistryObject<Item> LIGHT_PLASTEEL_BLOCk = registerWithTab("light_plasteel_block",
             () -> new BlockItem(MatBlocks.LIGHT_PLASTEEL_BLOCK.get(), basicItem()));
-
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
