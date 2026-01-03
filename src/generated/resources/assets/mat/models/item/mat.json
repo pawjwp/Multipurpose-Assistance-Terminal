@@ -239,15 +239,15 @@
       }
     },
     {
-      "model": "mat:item/mat_crafting",
-      "predicate": {
-        "minecraft:mode": 4.0
-      }
-    },
-    {
       "model": "mat:item/mat_atlas",
       "predicate": {
         "minecraft:mode": 3.0
+      }
+    },
+    {
+      "model": "mat:item/mat_crafting",
+      "predicate": {
+        "minecraft:mode": 4.0
       }
     },
     {
