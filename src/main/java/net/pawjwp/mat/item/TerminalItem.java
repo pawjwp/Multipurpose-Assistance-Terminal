@@ -33,36 +33,77 @@ public class TerminalItem extends Item implements Vanishable {
     public static final String TAG_TARGET_TRACKED = "TargetTracked";
     public static final String TAG_MODE = "Mode";
 
-    public static final float   MODE_DEFAULT   =  0f,  // blue    ( 185  175 - 195 )  right-left
-                                MODE_GUIDE     =  1f,  // forest  ( 140  150 - 130 )   left-right
-                                MODE_TRACKING  =  2f,  // lime    ( 95   85  - 105 )  right-left
-                                MODE_ATLAS     =  3f,  // yellow  ( 50   60  - 40  )   left-right
-                                MODE_CRAFTING  =  4f,  // red     ( 5    15  - 355 )   left-right
-                                MODE_QUESTING  =  5f,  // pink    ( 320  310 - 330 )  right-left
-                                MODE_STORAGE   =  6f,  // purple  ( 275  285 - 265 )   left-right
-                                MODE_STARMAP   =  7f;  // indigo  ( 230  220 - 240 )  right-left
+    // Hue values of textures for reference:
+    // DEFAULT:  blue    ( 185  175 - 195 )  right-left
+    // GUIDE:    forest  ( 140  150 - 130 )  left-right
+    // TRACKING: lime    ( 95   85  - 105 )  right-left
+    // ATLAS:    yellow  ( 50   60  - 40  )  left-right
+    // CRAFTING: red     ( 5    15  - 355 )  left-right
+    // QUESTING: pink    ( 320  310 - 330 )  right-left
+    // STORAGE:  purple  ( 275  285 - 265 )  left-right
+    // STARMAP:  indigo  ( 230  220 - 240 )  right-left
+
+    public enum Mode {
+        DEFAULT(0, "item.mat.mat", ""),
+        GUIDE(1, "item.mat.mat_guide", "_guide"),
+        TRACKING(2, "item.mat.mat_tracking", "_tracking"),
+        ATLAS(3, "item.mat.mat_atlas", "_atlas"),
+        CRAFTING(4, "item.mat.mat_crafting", "_crafting"),
+        QUESTING(5, "item.mat.mat_questing", "_questing"),
+        STORAGE(6, "item.mat.mat_storage", "_storage"),
+        STARMAP(7, "item.mat.mat_starmap", "_starmap");
+
+        private final int id;
+        private final String translationKey;
+        private final String modelSuffix;
+
+        Mode(int id, String translationKey, String modelSuffix) {
+            this.id = id;
+            this.translationKey = translationKey;
+            this.modelSuffix = modelSuffix;
+        }
+
+        public int getId() { return id; }
+        public float getPropertyValue() { return (float) id; }
+        public String getTranslationKey() { return translationKey; }
+        public String getModelSuffix() { return modelSuffix; }
+
+        public Mode next() {
+            Mode[] values = values();
+            return values[(this.ordinal() + 1) % values.length];
+        }
+
+        public static Mode fromId(int id) {
+            for (Mode mode : values()) {
+                if (mode.id == id) return mode;
+            }
+            return DEFAULT;
+        }
+    }
 
     public TerminalItem(Item.Properties pProperties) {
         super(pProperties);
     }
 
     // Mode handling
-    public static float getMode(ItemStack stack) {
+    public static Mode getMode(ItemStack stack) {
         CompoundTag tag = stack.getTag();
-        return (tag != null && tag.contains(TAG_MODE)) ? tag.getFloat(TAG_MODE) : MODE_DEFAULT;
+        if (tag != null && tag.contains(TAG_MODE)) {
+            return Mode.fromId(tag.getInt(TAG_MODE));
+        }
+        return Mode.DEFAULT;
     }
 
-    public static void setMode(ItemStack stack, float mode) {
-        stack.getOrCreateTag().putFloat(TAG_MODE, mode);
+    public static float getModePropertyValue(ItemStack stack) {
+        return getMode(stack).getPropertyValue();
     }
 
-    public void iterateMode(ItemStack stack) {
-        float mode = getMode(stack);
-        mode += 1f;
-        if (mode > MODE_STARMAP) {
-            mode = MODE_DEFAULT;
-        };
-        setMode(stack, mode);
+    public static void setMode(ItemStack stack, Mode mode) {
+        stack.getOrCreateTag().putInt(TAG_MODE, mode.getId());
+    }
+
+    public static void iterateMode(ItemStack stack) {
+        setMode(stack, getMode(stack).next());
     }
 
     // Target handling
@@ -123,13 +164,16 @@ public class TerminalItem extends Item implements Vanishable {
         if (!level.getBlockState(blockpos).is(Blocks.LODESTONE)) {
             return super.useOn(pContext);
         } else {
-            level.playSound((Player)null, blockpos, SoundEvents.LODESTONE_COMPASS_LOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.playSound(null, blockpos, SoundEvents.LODESTONE_COMPASS_LOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
             Player player = pContext.getPlayer();
+            if (player == null) {
+                return InteractionResult.PASS;
+            }
             ItemStack itemstack = pContext.getItemInHand();
             boolean flag = !player.getAbilities().instabuild && itemstack.getCount() == 1;
             if (flag) {
                 this.setTarget(level.dimension(), blockpos, itemstack.getOrCreateTag());
-                this.setMode(itemstack, MODE_TRACKING);
+                setMode(itemstack, Mode.TRACKING);
             } else {
                 ItemStack itemstack1 = new ItemStack(MatItems.MAT.get(), 1);
                 CompoundTag compoundtag = itemstack.hasTag() ? itemstack.getTag().copy() : new CompoundTag();
@@ -139,7 +183,7 @@ public class TerminalItem extends Item implements Vanishable {
                 }
 
                 this.setTarget(level.dimension(), blockpos, compoundtag);
-                this.setMode(itemstack1, MODE_TRACKING);
+                setMode(itemstack1, Mode.TRACKING);
                 if (!player.getInventory().add(itemstack1)) {
                     player.drop(itemstack1, false);
                 }
@@ -157,7 +201,7 @@ public class TerminalItem extends Item implements Vanishable {
             // When shift+right-clicking, cycle mode
             if (player.isSecondaryUseActive()) {
                 iterateMode(stack);
-                level.playSound(null, player.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.PLAYERS, 0.4F, 0.5F + 0.1F * getMode(stack));
+                level.playSound(null, player.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.PLAYERS, 0.4F, 0.5F + 0.1F * getMode(stack).getId());
             }
             // Otherwise, open corresponding menu
             else {
@@ -185,16 +229,6 @@ public class TerminalItem extends Item implements Vanishable {
      * different names based on their damage or NBT.
      */
     public String getDescriptionId(ItemStack pStack) {
-        float mode = getMode(pStack);
-        return switch ((int) (mode)) {
-            case 1 -> "item.mat.mat_guide";
-            case 2 -> "item.mat.mat_tracking";
-            case 3 -> "item.mat.mat_atlas";
-            case 4 -> "item.mat.mat_crafting";
-            case 5 -> "item.mat.mat_questing";
-            case 6 -> "item.mat.mat_storage";
-            case 7 -> "item.mat.mat_starmap";
-            default -> "item.mat.mat";
-        };
+        return getMode(pStack).getTranslationKey();
     }
 }

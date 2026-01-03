@@ -24,7 +24,7 @@ public class MatItemProperties {
             ItemProperties.register(
                     MatItems.MAT.get(),
                     ResourceLocation.parse("mode"),
-                    (stack, level, entity, seed) -> TerminalItem.getMode(stack)
+                    (stack, level, entity, seed) -> TerminalItem.getModePropertyValue(stack)
             );
 
             ItemProperties.register(

@@ -56,67 +56,44 @@ public class MatItemModels extends ItemModelProvider {
 
     public void terminalModel(Item terminalItem, String baseTextureName) {
         final String baseItemName = itemName(terminalItem);
-        final String guideItemName = baseTextureName + "_guide";
-        final String trackingItemName = baseTextureName + "_tracking";
-        final String atlasItemName = baseTextureName + "_atlas";
-        final String craftingItemName = baseTextureName + "_crafting";
-        final String questingItemName = baseTextureName + "_questing";
-        final String storageItemName = baseTextureName + "_storage";
-        final String starmapItemName = baseTextureName + "_starmap";
 
         ItemModelBuilder baseModel = withExistingParent(baseItemName, GENERATED)
                 .texture("layer0", resourceItem(baseItemName));
-        ItemModelBuilder guideModel = withExistingParent(guideItemName, GENERATED)
-                .texture("layer0", resourceItem(guideItemName));
-        ItemModelBuilder trackingModel = withExistingParent(trackingItemName, GENERATED)
-                .texture("layer0", resourceItem(trackingItemName));
-        ItemModelBuilder atlasModel = withExistingParent(atlasItemName, GENERATED)
-                .texture("layer0", resourceItem(atlasItemName));
-        ItemModelBuilder craftingModel = withExistingParent(craftingItemName, GENERATED)
-                .texture("layer0", resourceItem(craftingItemName));
-        ItemModelBuilder questingModel = withExistingParent(questingItemName, GENERATED)
-                .texture("layer0", resourceItem(questingItemName));
-        ItemModelBuilder storageModel = withExistingParent(storageItemName, GENERATED)
-                .texture("layer0", resourceItem(storageItemName));
-        ItemModelBuilder starmapModel = withExistingParent(starmapItemName, GENERATED)
-                .texture("layer0", resourceItem(starmapItemName));
 
+        // Create models and overrides for each non-default mode
+        for (TerminalItem.Mode mode : TerminalItem.Mode.values()) {
+            if (mode == TerminalItem.Mode.DEFAULT) continue;
 
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_GUIDE)
-                .model(new ModelFile.ExistingModelFile(resourceItem(guideItemName), existingFileHelper));
-        for (int i = 0; i <= 32; i++) {
-            int frame = (i + 16) & 31;
-            String modelName = baseTextureName + "_tracking_" + String.format("%02d", frame);
+            String modelName = baseTextureName + mode.getModelSuffix();
 
-            float angle = 0.0f;
-            if (i != 0) {
-                angle = (2f * i - 1f) / 64f;
+            // Tracking has different textures based on direction
+            if (mode == TerminalItem.Mode.TRACKING) {
+                for (int i = 0; i <= 32; i++) {
+                    int frame = (i + 16) & 31;
+                    String frameModelName = baseTextureName + mode.getModelSuffix() + "_" + String.format("%02d", frame);
 
-                withExistingParent(modelName, ResourceLocation.parse(GENERATED))
+                    float angle = 0.0f;
+                    if (i != 0) {
+                        angle = (2f * i - 1f) / 64f;
+
+                        withExistingParent(frameModelName, ResourceLocation.parse(GENERATED))
+                                .texture("layer0", resourceItem(frameModelName));
+                    }
+
+                    baseModel.override()
+                            .predicate(ResourceLocation.parse("mode"), mode.getPropertyValue())
+                            .predicate(ResourceLocation.parse("angle"), angle)
+                            .model(new ModelFile.UncheckedModelFile(resourceItem(frameModelName)));
+                }
+            } else {
+                withExistingParent(modelName, GENERATED)
                         .texture("layer0", resourceItem(modelName));
-            }
 
-            baseModel.override()
-                    .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_TRACKING)
-                    .predicate(ResourceLocation.parse("angle"), angle)
-                    .model(new ModelFile.UncheckedModelFile(resourceItem(modelName)));
+                baseModel.override()
+                        .predicate(ResourceLocation.parse("mode"), mode.getPropertyValue())
+                        .model(new ModelFile.ExistingModelFile(resourceItem(modelName), existingFileHelper));
+            }
         }
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_CRAFTING)
-                .model(new ModelFile.ExistingModelFile(resourceItem(craftingItemName), existingFileHelper));
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_ATLAS)
-                .model(new ModelFile.ExistingModelFile(resourceItem(atlasItemName), existingFileHelper));
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_QUESTING)
-                .model(new ModelFile.ExistingModelFile(resourceItem(questingItemName), existingFileHelper));
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_STORAGE)
-                .model(new ModelFile.ExistingModelFile(resourceItem(storageItemName), existingFileHelper));
-        baseModel.override()
-                .predicate(ResourceLocation.parse("mode"), TerminalItem.MODE_STARMAP)
-                .model(new ModelFile.ExistingModelFile(resourceItem(starmapItemName), existingFileHelper));
     }
 
     public void itemGeneratedModel(Item item, ResourceLocation texture) {
