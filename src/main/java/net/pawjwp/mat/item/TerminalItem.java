@@ -1,12 +1,18 @@
 package net.pawjwp.mat.item;
 
 import com.mojang.logging.LogUtils;
+import hardcorequesting.common.forge.event.EventTrigger;
+import hardcorequesting.common.forge.network.GeneralUsage;
+import hardcorequesting.common.forge.quests.QuestingDataManager;
+import hardcorequesting.common.forge.team.PlayerEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -219,6 +225,23 @@ public class TerminalItem extends Item implements Vanishable {
                     (id, inventory, p) -> new net.minecraft.world.inventory.CraftingMenu(id, inventory),
                     Component.translatable("container.mat.crafting")
             ));
+            case QUESTING -> {
+                if (!(player instanceof ServerPlayer)) return;
+
+                QuestingDataManager questingData = QuestingDataManager.getInstance();
+                if (!questingData.isQuestActive()) {
+                    player.sendSystemMessage(Component.translatable("hqm.message.noQuestYet"));
+                    return;
+                }
+
+                EventTrigger.instance().onBookOpening(new EventTrigger.BookOpeningEvent(player.getUUID(), false, true));
+                PlayerEntry entry = questingData.getQuestingData(player).getTeam().getEntry(player.getUUID());
+                if (entry != null) {
+                    GeneralUsage.sendOpenBook(player, false);
+                } else {
+                    player.sendSystemMessage(Component.translatable("hqm.message.bookNoPlayer"));
+                }
+            }
             default -> {}
         }
     }
