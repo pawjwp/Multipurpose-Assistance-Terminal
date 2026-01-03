@@ -205,14 +205,22 @@ public class TerminalItem extends Item implements Vanishable {
             }
             // Otherwise, open corresponding menu
             else {
-                player.openMenu(new SimpleMenuProvider(
-                        (id, inventory, p) -> new net.minecraft.world.inventory.CraftingMenu(id, inventory),
-                        net.minecraft.network.chat.Component.translatable("container.mat.crafting")
-                ));
+                openMenuForMode(player, stack);
             }
         }
 
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+    }
+
+    private void openMenuForMode(Player player, ItemStack stack) {
+        Mode mode = getMode(stack);
+        switch (mode) {
+            case CRAFTING -> player.openMenu(new SimpleMenuProvider(
+                    (id, inventory, p) -> new net.minecraft.world.inventory.CraftingMenu(id, inventory),
+                    Component.translatable("container.mat.crafting")
+            ));
+            default -> {}
+        }
     }
 
     private void setTarget(ResourceKey<Level> pLodestoneDimension, BlockPos pLodestonePos, CompoundTag pCompoundTag) {
